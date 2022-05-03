@@ -21,7 +21,6 @@ const Login = () => {
   const { signIn } = useGoogleLogin({
     clientId,
     onSuccess(res: any) {
-      console.log(res);
       dispatch(loginAuth(res.profileObj));
       navigate("/");
     },
