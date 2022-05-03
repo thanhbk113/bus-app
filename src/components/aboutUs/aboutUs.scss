@@ -1,0 +1,9 @@
+.aboutUs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: yellowgreen;
+    width: 100%;
+    height: calc(100vh - 4rem);
+}

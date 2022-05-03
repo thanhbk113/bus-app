@@ -1,0 +1,49 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(106, 106, 244) ;
+    height: 4rem;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    .link {
+        text-decoration: none;
+        span {
+            margin-left: 1rem;
+            cursor: pointer;
+            color: white;
+        }
+    }
+    .right {
+        display: flex;
+        align-items: center;
+        .link {
+            color: white;
+            text-decoration: none;
+            span {
+                cursor: pointer;
+                opacity: 0.6;
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+       span {
+           cursor: pointer;
+           opacity: 0.6;
+           margin-left: 1rem;
+           &:hover {
+               opacity: 1;
+           }
+       }
+        .icon {
+            cursor: pointer;
+        }
+      .MuiAvatar-root {
+          margin: 0 1rem;
+          cursor: pointer;
+      }
+    }
+}

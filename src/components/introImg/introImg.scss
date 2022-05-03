@@ -1,0 +1,39 @@
+@import '../../breakpoint.scss';
+
+.introContainer {
+    width: 100%;
+    position: relative;
+    img {
+        width: 100%;
+        height:calc(100vh - 4.3rem);
+        object-fit: fill;
+    }
+    .textContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+        
+        span {
+            font-weight: 300;
+            font-size: 2rem;
+            @include media("<=tablet") {
+                font-size: 1rem;
+            }
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 500;
+            padding: 1rem 0;
+            @include media("<=tablet") {
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 1rem 0;
+            }
+        }
+    }
+}
