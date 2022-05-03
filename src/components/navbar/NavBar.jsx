@@ -1,13 +1,15 @@
 import { NotificationsNone, Visibility } from "@mui/icons-material";
 import "./navbar.scss";
 import { Avatar, Menu, MenuItem } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
-import { useAppSelector } from "../../app/hooks";
-import { userSelector } from "../../features/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { logout, userSelector } from "../../features/userSlice";
 import { VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import Notifycation from "../notifycation/Notifycation";
+import { useGoogleLogout } from "react-google-login";
+import { clientId } from "../../share";
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [show, setShow] = React.useState(false);
@@ -27,6 +29,19 @@ const NavBar = () => {
   const handleDrop = (event) => {
     setDrop(true);
     setAnchorEl(event.currentTarget);
+  };
+  const dispath = useAppDispatch();
+  const navigate = useNavigate();
+  const { signOut } = useGoogleLogout({
+    clientId,
+    onLogoutSuccess() {
+      dispath(logout());
+      navigate("/login");
+    },
+  });
+  const handleLogout = () => {
+    handleClose();
+    signOut();
   };
   return (
     <div className="navbar">
@@ -106,6 +121,7 @@ const NavBar = () => {
               >
                 <MenuItem onClick={handleClose}>Xem lịch sử mua</MenuItem>
               </Link>
+              <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
             </>
           )}
         </Menu>

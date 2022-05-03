@@ -1,19 +1,21 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { busApi } from "../api/BusApi";
 import { RootState } from "../app/store";
-import { currentBus, totalBuy } from "../share";
+import { currentBus, totalBuy, User } from "../share";
 
 export const initialState: {
   wallet: number;
   totalBuy: totalBuy[];
   histoyBuy: totalBuy[];
   currentBus: currentBus[];
+  auth: User | null;
   loading: Boolean;
 } = {
   wallet: 1000000,
   totalBuy: [],
   currentBus: [],
   histoyBuy: [],
+  auth: null,
   loading: false,
 };
 
@@ -49,6 +51,12 @@ const userSlice = createSlice({
       newArr = [...state.histoyBuy, ...action.payload];
       state.histoyBuy = newArr;
     },
+    loginAuth: (state, action: PayloadAction<User>) => {
+      state.auth = action.payload;
+    },
+    logout: (state) => {
+      state.auth = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getAllBus.pending, (state) => {
@@ -75,5 +83,6 @@ const userSlice = createSlice({
 });
 
 export const userSelector = (state: RootState) => state.user;
-export const { buyTicket, moveToHistory } = userSlice.actions;
+export const { buyTicket, moveToHistory, loginAuth, logout } =
+  userSlice.actions;
 export default userSlice.reducer;

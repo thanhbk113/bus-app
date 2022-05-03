@@ -1,0 +1,15 @@
+@import "../../breakpoint.scss";
+
+.login {
+  background-color: aliceblue;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  @include media("<=tablet") {
+    h3 {
+      font-size: 0.8rem;
+    }
+  }
+}
