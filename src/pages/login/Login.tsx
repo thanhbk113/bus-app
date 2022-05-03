@@ -1,4 +1,3 @@
-import { Google } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -6,35 +5,34 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
-import { useEffect } from "react";
-import { useGoogleLogin } from "react-google-login";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { loginAuth, userSelector } from "../../features/userSlice";
-import { clientId } from "../../share";
 import "./login.scss";
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(userSelector);
   const navigate = useNavigate();
-  const { signIn } = useGoogleLogin({
-    clientId,
-    onSuccess(res: any) {
-      dispatch(loginAuth(res.profileObj));
-      navigate("/");
-    },
-    isSignedIn: true,
-    cookiePolicy: "single_host_origin",
-  });
-
   useEffect(() => {
     if (user.auth) {
       navigate("/");
     }
   }, [dispatch, user]);
-
-  console.log(user.auth);
+  const [name, setName] = useState("");
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const handleLogIn = () => {
+    if (name !== "") {
+      dispatch(loginAuth(name));
+      navigate("/");
+    } else {
+      toast.error("Vui lòng nhập tên của bạn !");
+    }
+  };
 
   return (
     <div className="login">
@@ -69,13 +67,14 @@ const Login = () => {
             flexDirection: "column",
           }}
         >
+          <input
+            type="text"
+            placeholder="Nhập tên của bạn"
+            onChange={handleInput}
+          />
           <CardActions>
-            <Button
-              variant="contained"
-              endIcon={<Google />}
-              onClick={() => signIn()}
-            >
-              Đăng nhập với Google
+            <Button variant="contained" onClick={handleLogIn}>
+              Đăng nhập
             </Button>
           </CardActions>
         </CardContent>

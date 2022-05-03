@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { busApi } from "../api/BusApi";
 import { RootState } from "../app/store";
-import { currentBus, totalBuy, User } from "../share";
+import { currentBus, totalBuy } from "../share";
 
 export const initialState: {
   wallet: number;
   totalBuy: totalBuy[];
   histoyBuy: totalBuy[];
   currentBus: currentBus[];
-  auth: User | null;
+  auth: string | null;
   loading: Boolean;
 } = {
   wallet: 1000000,
@@ -51,7 +51,7 @@ const userSlice = createSlice({
       newArr = [...state.histoyBuy, ...action.payload];
       state.histoyBuy = newArr;
     },
-    loginAuth: (state, action: PayloadAction<User>) => {
+    loginAuth: (state, action: PayloadAction<string>) => {
       state.auth = action.payload;
     },
     logout: (state) => {

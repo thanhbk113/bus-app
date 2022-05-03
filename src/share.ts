@@ -11,11 +11,3 @@ export interface currentBus {
   valueS: number;
   valueL: number;
 }
-
-export interface User {
-  familyName: string;
-  imgUrl: string;
-}
-
-export const clientId =
-  "506441914421-ni2db10dvgmg4td5lana58bctb6b7fqc.apps.googleusercontent.com";
