@@ -41,7 +41,14 @@ function App() {
               </RequiredAuth>
             }
           />
-          <Route path="/huongdan" element={<TutorialBus />} />
+          <Route
+            path="/huongdan"
+            element={
+              <RequiredAuth>
+                <TutorialBus />
+              </RequiredAuth>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
