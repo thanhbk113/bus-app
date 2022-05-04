@@ -19,11 +19,20 @@ const HistoryBuy = () => {
             flexDirection: "column",
           }}
         >
-          <Typography component="div" variant="h2">
+          <Typography component="div" variant="h4">
             Lịch sử mua vé của bạn
           </Typography>
           {user.histoyBuy.map((b) => (
-            <Card sx={{ maxWidth: 500, width: 400, margin: 3 }}>
+            <Card
+              sx={{
+                maxWidth: 500,
+                width: {
+                  sm: 300,
+                  md: 400,
+                },
+                margin: 3,
+              }}
+            >
               <CardMedia
                 component="img"
                 height="240"
