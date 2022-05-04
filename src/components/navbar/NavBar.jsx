@@ -1,6 +1,17 @@
-import { NotificationsNone, Visibility } from "@mui/icons-material";
+import { NotificationsNone, Send, Visibility } from "@mui/icons-material";
 import "./navbar.scss";
-import { Avatar, Menu, MenuItem } from "@mui/material";
+import {
+  Avatar,
+  Backdrop,
+  Box,
+  Button,
+  Menu,
+  MenuItem,
+  Modal,
+  Rating,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -8,6 +19,7 @@ import { logout, userSelector } from "../../features/userSlice";
 import { VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import Notifycation from "../notifycation/Notifycation";
+import { toast } from "react-toastify";
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [show, setShow] = React.useState(false);
@@ -32,6 +44,19 @@ const NavBar = () => {
   const handleLogout = () => {
     handleClose();
     dispath(logout());
+  };
+  const [openMd, setOpenMd] = useState(false);
+  const handleOpenMd = () => {
+    handleClose();
+    setOpenMd(true);
+  };
+  const handleCloseMd = () => {
+    setOpenMd(false);
+  };
+  const [value, setValue] = useState(2);
+  const handleSent = () => {
+    toast.success("Chúng tôi đã nhận được và sẽ phản hồi đến bạn sớm");
+    setOpenMd(false);
   };
   return (
     <div className="navbar">
@@ -112,10 +137,92 @@ const NavBar = () => {
               >
                 <MenuItem onClick={handleClose}>Xem lịch sử mua</MenuItem>
               </Link>
+              <MenuItem onClick={handleOpenMd}>Phản hồi và đánh giá</MenuItem>
               <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
             </>
           )}
         </Menu>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={openMd}
+          onClose={handleCloseMd}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Box
+            sx={{
+              width: {
+                sm: 200,
+                md: 500,
+              },
+              height: 400,
+              backgroundColor: "white",
+              position: "absolute",
+              margin: "auto",
+              top: 0,
+              bottom: 0,
+              right: 0,
+              left: 0,
+              zIndex: 3,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Typography
+              id="transition-modal-title"
+              variant="h6"
+              component="h3"
+              sx={{
+                fontSize: {
+                  sm: "1rem",
+                  md: "",
+                },
+              }}
+            >
+              Phản hồi từ bạn(Không bắt buộc)
+            </Typography>
+            <TextField
+              id="outlined-basic"
+              label="Phản hồi của bạn..."
+              variant="outlined"
+              sx={{
+                width: "90%",
+              }}
+            />
+            <Typography
+              sx={{
+                marginTop: 2,
+              }}
+              component="legend"
+            >
+              Đánh giá
+            </Typography>
+            <Rating
+              name="simple-controlled"
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+            />
+            <Button
+              variant="contained"
+              sx={{
+                marginTop: 3,
+                width: "20%",
+              }}
+              endIcon={<Send />}
+              onClick={handleSent}
+            >
+              Gửi
+            </Button>
+          </Box>
+        </Modal>
       </div>
     </div>
   );
